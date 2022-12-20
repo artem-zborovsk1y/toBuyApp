@@ -27,6 +27,7 @@ export default function App() {
     let newList = {};
     newList.id = nanoid();
     newList.products = [];
+    newList.isEnabled = false;
     if(list.trim() !== '') {
       newList.title = list;
     } else {
@@ -49,6 +50,7 @@ export default function App() {
   function deleteList(id) {
     let newLists = lists.filter((item) => item.id !== id);
     setLists(newLists);
+    
     AsyncStorage.setItem('data', JSON.stringify(newLists)).then(() => {
       setLists(newLists);
     }).catch(error => console.log(error))
@@ -62,6 +64,7 @@ export default function App() {
       return item;
     });
     setLists(newLists);
+
     AsyncStorage.setItem('data', JSON.stringify(newLists)).then(() => {
       setLists(newLists);
     }).catch(error => console.log(error))

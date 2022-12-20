@@ -4,18 +4,23 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView,
 const globalStyles = require('../styles');
 
 const List = ({ navigation, route, ...props }) => {
-    const [product, setProduct] = useState('');
     const { id } = route.params;
-
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    let currentList = props.lists.find(el => {
-        return el.id === id;
+    let currentList = props.lists.find(item => {
+        return item.id === id;
     });
 
+    const [product, setProduct] = useState('');
+    const [isEnabled, setIsEnabled] = useState(currentList.isEnabled);
+
+    const toggleSwitch = () => {
+        currentList.isEnabled = !currentList.isEnabled;
+        props.changeProduct(currentList);
+
+        setIsEnabled(previousState => !previousState);
+    }
+
     useEffect(() => {   
-        navigation.setOptions({ title: currentList.title })
+        navigation.setOptions({ title: currentList.title });
     }, [])
 
     const pressHandler = () => {
@@ -136,7 +141,7 @@ const List = ({ navigation, route, ...props }) => {
                         <Switch
                             trackColor={{ false: "black", true: "black" }}
                             thumbColor={isEnabled ? "#50c878" : "#f4f3f4"}
-                            ios_backgroundColor="#3e3e3e"
+                            ios_backgroundColor="black"
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                         />
