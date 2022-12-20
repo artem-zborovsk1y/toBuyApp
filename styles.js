@@ -7,10 +7,7 @@ module.exports = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: 'white',
     },
-    productsSection: {
-        flex: 1
-    },
-    listsSection: {
+    section: {
         flex: 1
     },
     btn: {
@@ -31,18 +28,7 @@ module.exports = StyleSheet.create({
         letterSpacing: 0.25,
         color: 'white'
     },
-    blockProduct: {
-        backgroundColor: 'black',
-        width: '90%',
-        paddingHorizontal: 30,
-        paddingVertical: 10,
-        borderRadius: 10,
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    blockList: {
+    itemBlock: {
         backgroundColor: 'black',
         width: '90%',
         paddingHorizontal: 30,
@@ -51,26 +37,61 @@ module.exports = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
     },
-    title: {
+    titleWhite: {
         fontWeight: '700',
         color: 'white'
     },
-    btnWhite: {
+    titleBlack: {
+        fontWeight: '700',
+        color: 'black',
+        fontSize: 18
+    },
+    btnDelete: {
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 10,
-        backgroundColor: 'white',
+        backgroundColor: '#ed264e',
         width: '15%',
         marginVertical: 15
     },
-    btnTextWhite: {
+    btnTextDelete: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'black'
+        color: 'white'
+    },
+    itemHeader: {
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    input: {
+        width: '70%',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 32
+    },
+    inputWhite: {
+        width: '35%',
+        borderWidth: 2,
+        borderColor: 'white',
+        borderRadius: 10,
+        paddingVertical: 2,
+        paddingHorizontal: 5,
+        backgroundColor: 'white'
+    },
+    devider: {
+        borderBottomColor: 'black',
+        borderBottomWidth: 2,
+        marginTop: 10,
+        marginBottom: 30,
+        width: '100%'
     }
 });

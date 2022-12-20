@@ -7,7 +7,7 @@ const AddList = ({ navigation, ...props }) => {
         <View style={[globalStyles.container, styles.section]}>
             <TextInput
                 autoFocus={true}
-                style={styles.input}
+                style={globalStyles.input}
                 placeholder='Enter list title'
                 autoCorrect={false}
                 cursorColor='black'
@@ -19,21 +19,13 @@ const AddList = ({ navigation, ...props }) => {
                     let id = props.createNewList();
                     navigation.navigate('List', {id: id});
             }}> 
-                <Text style={globalStyles.btnText}>Add list</Text>
+                <Text style={globalStyles.btnText}>Add list +</Text>
             </TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    input: {
-        width: '70%',
-        borderWidth: 2,
-        borderColor: 'black',
-        borderRadius: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 32
-    },
     section: {
         alignItems: 'center'
     }

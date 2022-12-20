@@ -44,18 +44,18 @@ const Lists = ({ navigation, ...props }) => {
                 </TouchableOpacity>
             </View>
 
-            <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={globalStyles.listsSection} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={globalStyles.section} showsVerticalScrollIndicator={false}>
                 {props.lists.length === 0 ? <Text>No lists yet</Text> : props.lists.map((item, index) => 
-                    <TouchableOpacity onPress={() => {navigation.navigate('List', {id: item.id})}} style={index === props.lists.length  - 1 ? globalStyles.blockList : [globalStyles.blockList, { marginBottom: 10 }]} key={item.id}>
-                        <View style={styles.listHeader}>
-                            <Text style={globalStyles.title}>{props.lists.length - index}) {item.title.length > 21 ? item.title.slice(0, 20) + '...' : item.title}</Text>
-                            <TouchableOpacity style={globalStyles.btnWhite} onPress={() => {handleDelete(item.id)}}>
-                                <Text style={globalStyles.btnTextWhite}>X</Text>
+                    <TouchableOpacity onPress={() => {navigation.navigate('List', {id: item.id})}} style={index === props.lists.length  - 1 ? globalStyles.itemBlock : [globalStyles.itemBlock, { marginBottom: 10 }]} key={item.id}>
+                        <View style={globalStyles.itemHeader}>
+                            <Text style={globalStyles.titleWhite}>{props.lists.length - index}) {item.title.length > 21 ? item.title.slice(0, 20) + '...' : item.title}</Text>
+                            <TouchableOpacity style={globalStyles.btnDelete} onPress={() => {handleDelete(item.id)}}>
+                                <Text style={globalStyles.btnTextDelete}>X</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.progressBlock}>
-                            <Text style={[globalStyles.title, {marginRight: 10}]}>{`${item.products ? getStatus(item.products) : 'no data'}`}</Text>
+                            <Text style={[globalStyles.titleWhite, {marginRight: 10}]}>{`${item.products ? getStatus(item.products) : 'no data'}`}</Text>
                             <View style={styles.progress}>
                                 <View style={[styles.progressInner, item.products ? {width: `${getPercentage(item.products)}%`} : {width: 0}]}></View>
                             </View>
@@ -67,20 +67,14 @@ const Lists = ({ navigation, ...props }) => {
     )
 }
 
-const styles = StyleSheet.create({
-    listHeader: {
-        display: 'flex',
-        flexDirection:'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },  
+const styles = StyleSheet.create({ 
     progressBlock: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         alignContent: 'center',
         alignSelf: 'center',
-        marginTop: 10,
+        width: '100%'
     },
     progress: {
         width: '80%',
