@@ -10,7 +10,7 @@ module.exports = StyleSheet.create({
     section: {
         flex: 1
     },
-    btn: {
+    btnBlack: {
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -21,7 +21,7 @@ module.exports = StyleSheet.create({
         width: '40%',
         marginVertical: 15
     },
-    btnText: {
+    btnBlackText: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
@@ -46,7 +46,7 @@ module.exports = StyleSheet.create({
         color: 'black',
         fontSize: 18
     },
-    btnDelete: {
+    btnRed: {
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -54,17 +54,27 @@ module.exports = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         backgroundColor: '#ed264e',
-        width: '15%',
+        width: 45,
         marginVertical: 15
     },
-    btnTextDelete: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white'
+    btnBlue: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        backgroundColor: '#1a78c9',
+        width: 45,
+        marginVertical: 15
     },
     itemHeader: {
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    itemDetails: {
         display: 'flex',
         flexDirection:'row',
         justifyContent: 'space-between',

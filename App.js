@@ -70,11 +70,19 @@ export default function App() {
     }).catch(error => console.log(error))
   }
 
+  function renameList(newLists) {
+    setLists(newLists);
+
+    AsyncStorage.setItem('data', JSON.stringify(newLists)).then(() => {
+      setLists(newLists);
+    }).catch(error => console.log(error))
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Lists">
-          {props => <Lists {...props} lists={lists} setLists={setLists} list={list} setList={setList} deleteList={deleteList} />}
+          {props => <Lists {...props} lists={lists} setLists={setLists} list={list} setList={setList} deleteList={deleteList} renameList={renameList} />}
         </Stack.Screen>
 
         <Stack.Screen name="AddList"> 

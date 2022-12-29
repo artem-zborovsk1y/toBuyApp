@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
+import Dialog from "react-native-dialog";
 import { Text, View, TouchableOpacity, ScrollView, Alert, StyleSheet } from 'react-native';
 const globalStyles = require('../styles');
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Lists = ({ navigation, ...props }) => {
+    const [visible, setVisible] = useState(false);
+    const [newName, setNewName] = useState('');
+    const [activeId, setActiveId] = useState('');
+
     function handleDelete(id) {
         Alert.alert(
             'Are you sure you want to delete this list?', 
@@ -36,11 +42,49 @@ const Lists = ({ navigation, ...props }) => {
         }
     }
 
+    const handleRename = (id) => {
+        setVisible(true);
+        setActiveId(id);
+    }
+
+    const updateName = () => {
+        let lists = props.lists.map((item) => {
+            if(item.id === activeId) {
+                item.title = newName;
+            }
+            return item;
+        });
+        setNewName('');
+        setActiveId('');
+        props.renameList(lists);
+    }
+
     return(
         <View style={globalStyles.container}>
+            <Dialog.Container visible={visible}>
+                <Dialog.Title>List new name</Dialog.Title>
+
+                <Dialog.Input 
+                    placeholder='Enter list name' 
+                    autoCorrect={false}
+                    value={newName}
+                    onChangeText={setNewName}
+                />
+
+                <Dialog.Button label="Cancel" onPress={() => {
+                    setVisible(false);
+                    setNewName('');
+                }} />
+                <Dialog.Button label="Confirm" onPress={() => {
+                    updateName();
+                    setVisible(false);
+                    setNewName('');
+                }} />
+            </Dialog.Container>
+
             <View>
-                <TouchableOpacity style={globalStyles.btn} onPress={() => {navigation.navigate('AddList')}}> 
-                    <Text style={globalStyles.btnText}>Add list +</Text>
+                <TouchableOpacity style={globalStyles.btnBlack} onPress={() => {navigation.navigate('AddList')}}> 
+                    <Text style={globalStyles.btnBlackText}>Add list +</Text>
                 </TouchableOpacity>
             </View>
 
@@ -49,9 +93,16 @@ const Lists = ({ navigation, ...props }) => {
                     <TouchableOpacity onPress={() => {navigation.navigate('List', {id: item.id})}} style={index === props.lists.length  - 1 ? globalStyles.itemBlock : [globalStyles.itemBlock, { marginBottom: 10 }]} key={item.id}>
                         <View style={globalStyles.itemHeader}>
                             <Text style={globalStyles.titleWhite}>{props.lists.length - index}) {item.title.length > 21 ? item.title.slice(0, 20) + '...' : item.title}</Text>
-                            <TouchableOpacity style={globalStyles.btnDelete} onPress={() => {handleDelete(item.id)}}>
-                                <Text style={globalStyles.btnTextDelete}>X</Text>
-                            </TouchableOpacity>
+
+                            <View style={globalStyles.itemDetails}>
+                                <TouchableOpacity style={globalStyles.btnBlue} onPress={() => {handleRename(item.id)}}>
+                                    <Icon name="pencil" size={30} color={"#fff"} />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={[globalStyles.btnRed, {marginLeft: 15}]} onPress={() => {handleDelete(item.id)}}>
+                                    <Icon name="remove" size={30} color={"#fff"} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
                         <View style={styles.progressBlock}>

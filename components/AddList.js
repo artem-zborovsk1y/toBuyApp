@@ -15,11 +15,11 @@ const AddList = ({ navigation, ...props }) => {
                 onChangeText={(text) => props.setList(text)}
             />
 
-            <TouchableOpacity style={globalStyles.btn} onPress={() => {
+            <TouchableOpacity style={globalStyles.btnBlack} onPress={() => {
                     let id = props.createNewList();
                     navigation.navigate('List', {id: id});
             }}> 
-                <Text style={globalStyles.btnText}>Add list +</Text>
+                <Text style={globalStyles.btnBlackText}>Add list +</Text>
             </TouchableOpacity>
         </View>
     )

@@ -1,7 +1,9 @@
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
+import Dialog from "react-native-dialog";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView, Switch } from 'react-native';
 const globalStyles = require('../styles');
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const List = ({ navigation, route, ...props }) => {
     const { id } = route.params;
@@ -11,6 +13,9 @@ const List = ({ navigation, route, ...props }) => {
 
     const [product, setProduct] = useState('');
     const [isEnabled, setIsEnabled] = useState(currentList.isEnabled);
+    const [visible, setVisible] = useState(false);
+    const [newName, setNewName] = useState('');
+    const [activeId, setActiveId] = useState('');
 
     const toggleSwitch = () => {
         currentList.isEnabled = !currentList.isEnabled;
@@ -95,6 +100,23 @@ const List = ({ navigation, route, ...props }) => {
         props.changeProduct(currentList);
     }
 
+    const handleRename = (id) => {
+        setVisible(true);
+        setActiveId(id);
+    }
+
+    const updateName = () => {
+        currentList.products = currentList.products.map((item) => {
+            if(item.id === activeId) {
+                item.name = newName;
+            }
+            return item;
+        });
+        setNewName('');
+        setActiveId('');
+        props.changeProduct(currentList);
+    }
+
     function whatShow(price, quantity) {
         if(price && price !== 0 && !isNaN(price)) {
             if(quantity && price !== 0 && !isNaN(price)) {
@@ -121,6 +143,27 @@ const List = ({ navigation, route, ...props }) => {
 
     return(
         <View style={globalStyles.container}>
+            <Dialog.Container visible={visible}>
+                <Dialog.Title>Product new name</Dialog.Title>
+
+                <Dialog.Input 
+                    placeholder='Enter product name' 
+                    autoCorrect={false}
+                    value={newName}
+                    onChangeText={setNewName}
+                />
+
+                <Dialog.Button label="Cancel" onPress={() => {
+                    setVisible(false);
+                    setNewName('');
+                }} />
+                <Dialog.Button label="Confirm" onPress={() => {
+                    updateName();
+                    setVisible(false);
+                    setNewName('');
+                }} />
+            </Dialog.Container>
+
             <View>
                 <View style={styles.header}>
                     <TextInput
@@ -131,8 +174,8 @@ const List = ({ navigation, route, ...props }) => {
                         onChangeText={setProduct}
                     />
 
-                    <TouchableOpacity style={[globalStyles.btn, {width: '30%'}]} onPress={pressHandler}>
-                        <Text style={globalStyles.btnText}>Add</Text>
+                    <TouchableOpacity style={[globalStyles.btnBlack, {width: '30%'}]} onPress={pressHandler}>
+                        <Text style={globalStyles.btnBlackText}>Add</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -156,9 +199,16 @@ const List = ({ navigation, route, ...props }) => {
                     <TouchableOpacity onLongPress={() => {toggleStatus(item.id)}} style={[index === currentList.products.length  - 1 ? globalStyles.itemBlock : [globalStyles.itemBlock, { marginBottom: 10 }], item.status ? styles.completed : '']} key={item.id}>
                         <View style={globalStyles.itemHeader}>
                             <Text style={globalStyles.titleWhite}>{currentList.products.length - index}) {item.name.length > 21 ? item.name.slice(0, 20) + '...' : item.name}</Text>
-                            <TouchableOpacity style={globalStyles.btnDelete} onPress={() => {deleteProduct(item.id)}}>
-                                <Text style={globalStyles.btnTextDelete}>X</Text>
-                            </TouchableOpacity>
+
+                            <View style={globalStyles.itemDetails}>
+                                <TouchableOpacity style={globalStyles.btnBlue} onPress={() => {handleRename(item.id)}}>
+                                    <Icon name="pencil" size={30} color={"#fff"} />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={[globalStyles.btnRed, {marginLeft: 15}]} onPress={() => {deleteProduct(item.id)}}>
+                                    <Icon name="remove" size={30} color={"#fff"} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         
                         <View style={isEnabled ? styles.productDetails : {display: 'none'}}>
@@ -174,7 +224,7 @@ const List = ({ navigation, route, ...props }) => {
                                     maxLength={5}
                                 />
 
-                                <Text style={styles.priceItem}>*</Text>
+                                <Icon style={styles.priceItem} name="times" size={30} color={"#fff"} />
 
                                 <TextInput
                                     style={globalStyles.inputWhite}
