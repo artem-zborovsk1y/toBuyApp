@@ -113,7 +113,7 @@ const List = ({ navigation, route, ...props }) => {
             const total = currentList.products.reduce((acc, item) => {
                 return acc + Number(whatShow(item.price, item.quantity));
             }, 0);
-            return Math.floor(total * 100) / 100;
+            return total.toFixed(2);
         } else {
             return 0;
         }
@@ -171,6 +171,7 @@ const List = ({ navigation, route, ...props }) => {
                                     value={item.price}
                                     onChangeText={(price) => updatePrice(price, item.id)}
                                     keyboardType={"number-pad"}
+                                    maxLength={5}
                                 />
 
                                 <Text style={styles.priceItem}>*</Text>
@@ -183,6 +184,7 @@ const List = ({ navigation, route, ...props }) => {
                                     value={item.quantity}
                                     onChangeText={(quantity) => updateQuantity(quantity, item.id)}
                                     keyboardType={"number-pad"}
+                                    maxLength={5}
                                 />
 
                                 <Text style={styles.priceItem}>=</Text>

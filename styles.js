@@ -79,12 +79,13 @@ module.exports = StyleSheet.create({
         paddingHorizontal: 32
     },
     inputWhite: {
+        textAlign: 'center',
         width: '35%',
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 10,
         paddingVertical: 2,
-        paddingHorizontal: 5,
+        paddingHorizontal: 6,
         backgroundColor: 'white'
     },
     devider: {
