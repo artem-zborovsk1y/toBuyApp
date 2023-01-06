@@ -29,7 +29,7 @@ const Lists = ({ navigation, ...props }) => {
 
     const getStatus = (products) => {
         const completed = products.filter((item) => item.status).length;
-        return `${completed}/${products.length}`;
+        return `${completed} / ${products.length}`;
     }
 
     const getPercentage = (products) => {
@@ -59,16 +59,35 @@ const Lists = ({ navigation, ...props }) => {
         props.renameList(lists);
     }
 
+    const clearAllListsHandle = () => {
+        Alert.alert(
+            'Are you sure you want to delete all lists?', 
+            'This action cannot be undone', 
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+                onPress: () => {return}
+              }, 
+              {
+                text: 'Delete',
+                onPress: () => {props.clearAllLists()}
+              }
+            ]
+        );
+    }
+
     return(
         <View style={globalStyles.container}>
             <Dialog.Container visible={visible}>
-                <Dialog.Title>List new name</Dialog.Title>
+                <Dialog.Title style={{color: 'black'}}>List new name</Dialog.Title>
 
                 <Dialog.Input 
                     placeholder='Enter list name' 
                     autoCorrect={false}
                     value={newName}
                     onChangeText={setNewName}
+                    style={{color: 'black'}}
                 />
 
                 <Dialog.Button label="Cancel" onPress={() => {
@@ -82,9 +101,13 @@ const Lists = ({ navigation, ...props }) => {
                 }} />
             </Dialog.Container>
 
-            <View>
+            <View style={styles.header}>
                 <TouchableOpacity style={globalStyles.btnBlack} onPress={() => {navigation.navigate('AddList')}}> 
                     <Text style={globalStyles.btnBlackText}>Add list +</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={globalStyles.btnRed} onPress={clearAllListsHandle}> 
+                    <Icon name="ban" size={30} color={"#fff"} />
                 </TouchableOpacity>
             </View>
 
@@ -119,6 +142,13 @@ const Lists = ({ navigation, ...props }) => {
 }
 
 const styles = StyleSheet.create({ 
+    header: {
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: 10
+    },
     progressBlock: {
         flexDirection: 'row',
         alignItems: 'center',

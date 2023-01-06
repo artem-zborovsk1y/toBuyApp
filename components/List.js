@@ -117,6 +117,27 @@ const List = ({ navigation, route, ...props }) => {
         props.changeProduct(currentList);
     }
 
+    const clearAllProductsHandler = () => {
+        Alert.alert(
+            'Are you sure you want to delete all products?', 
+            'This action cannot be undone', 
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+                onPress: () => {return}
+              }, 
+              {
+                text: 'Delete',
+                onPress: () => {
+                    currentList.products = [];
+                    props.changeProduct(currentList);
+                }
+              }
+            ]
+        );
+    }
+
     function whatShow(price, quantity) {
         if(price && price !== 0 && !isNaN(price)) {
             if(quantity && price !== 0 && !isNaN(price)) {
@@ -144,13 +165,14 @@ const List = ({ navigation, route, ...props }) => {
     return(
         <View style={globalStyles.container}>
             <Dialog.Container visible={visible}>
-                <Dialog.Title>Product new name</Dialog.Title>
+                <Dialog.Title style={{color: 'black'}}>Product new name</Dialog.Title>
 
                 <Dialog.Input 
                     placeholder='Enter product name' 
                     autoCorrect={false}
                     value={newName}
                     onChangeText={setNewName}
+                    style={{color: 'black'}}
                 />
 
                 <Dialog.Button label="Cancel" onPress={() => {
@@ -188,7 +210,12 @@ const List = ({ navigation, route, ...props }) => {
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                         />
+
                         <Text style={isEnabled ? globalStyles.titleBlack : {display: 'none'}}>Total: {totalPrice()}$</Text>
+
+                        <TouchableOpacity style={globalStyles.btnRed} onPress={clearAllProductsHandler}> 
+                            <Icon name="ban" size={30} color={"#fff"} />
+                        </TouchableOpacity>
                     </View>
                     <View style={globalStyles.devider}/>
                 </View>
@@ -240,7 +267,6 @@ const List = ({ navigation, route, ...props }) => {
                                 <Text style={styles.priceItem}>=</Text>
                             </View>
                             
-
                             <Text style={styles.priceItem}>{whatShow(item.price, item.quantity) + '$'}</Text>
                         </View>
                     </TouchableOpacity>

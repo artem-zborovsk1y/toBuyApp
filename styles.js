@@ -54,7 +54,7 @@ module.exports = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         backgroundColor: '#ed264e',
-        width: 45,
+        width: 50,
         marginVertical: 15
     },
     btnBlue: {

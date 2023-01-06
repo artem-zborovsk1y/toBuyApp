@@ -78,11 +78,18 @@ export default function App() {
     }).catch(error => console.log(error))
   }
 
+  function clearAllLists() {
+    setLists([]);
+    AsyncStorage.setItem('data', JSON.stringify([])).then(() => {
+      setLists([]);
+    }).catch(error => console.log(error))
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Lists">
-          {props => <Lists {...props} lists={lists} setLists={setLists} list={list} setList={setList} deleteList={deleteList} renameList={renameList} />}
+          {props => <Lists {...props} lists={lists} setLists={setLists} list={list} setList={setList} deleteList={deleteList} renameList={renameList} clearAllLists={clearAllLists} />}
         </Stack.Screen>
 
         <Stack.Screen name="AddList"> 
